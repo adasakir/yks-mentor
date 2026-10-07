@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>YKS Koçluk • İlknur | Deneme Sınavı Analizi</title>
+<meta name="description" content="YKS Koçluk İlknur — TYT & AYT deneme sınavı analiz ve takip platformu." />
+<link rel="stylesheet" href="styles.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand" onclick="showView('home')">
+    <div class="logo">YKS</div>
+    <div>
+      <div class="brand-title">YKS Koçluk • İlknur</div>
+      <div class="brand-sub">Deneme Sınavı Analizi</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+  <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Koyu / Açık mod">🌙</button>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+  </div>
+</header>
+<div class="syncbar"><span id="syncStatus" onclick="askSyncSecret()" title="Buluttan güncel veriyi çekmek için dokun">☁ …</span></div>
+
+<nav class="drawer" id="drawer">
+  <button class="drawer-close" id="drawerClose">✕</button>
+  <p class="drawer-label">MENÜ</p>
+  <a href="#" data-view="home" class="drawer-link active">🏠 Anasayfa</a>
+  <a href="#" data-view="exams" class="drawer-link">📝 Sınavlar</a>
+  <a href="#" data-view="exams-tyt" class="drawer-link sub">— TYT Sınavları</a>
+  <a href="#" data-view="exams-ayt" class="drawer-link sub">— AYT Sınavları</a>
+  <a href="#" data-view="add" class="drawer-link">➕ Sınav Ekle</a>
+  <a href="#" data-view="dagilim" class="drawer-link">📊 Konu Dağılımı</a>
+  <a href="#" data-view="stats" class="drawer-link">📈 İstatistikler</a>
+  <a href="#" data-view="done" class="drawer-link">✅ Biten Konular</a>
+  <a href="#" data-view="ai" class="drawer-link">🤖 Yapay Zeka</a>
+  <a href="#" data-view="priority" class="drawer-link">🎯 Öncelik</a>
+  <a href="#" data-view="compare" class="drawer-link">⚖️ Karşılaştırma</a>
+  <a href="#" data-view="countdown" class="drawer-link">⏳ Sayaç</a>
+  <a href="#" data-view="report" class="drawer-link">🖨️ Karne</a>
+  <a href="#" data-view="quiz" class="drawer-link">💡 YZ Soru</a>
+  <a href="#" data-view="schedule" class="drawer-link">📅 Ders Programı</a>
+  <div class="drawer-foot">yks-kocluk-ilknur • v1.0</div>
+</nav>
+<div class="overlay" id="overlay"></div>
+
+<main>
+  <!-- ANASAYFA -->
+  <section id="view-home" class="view active">
+    <div class="home-cd">
+      <span class="home-cd-label">⏳ YKS 2027'ye kalan</span>
+      <span class="home-cd-times" id="homeCd"><b>–</b> gün <b>–</b> saat <b>–</b> dk <b>–</b> sn</span>
+    </div>
+    <div class="hero">
+      <h1>Hoş geldin, İlknur 👋</h1>
+      <p>Denemelerini ekle, netlerini takip et, hangi konudan yanlış yaptığını tek ekranda gör.</p>
+      <div class="hero-actions">
+        <button class="btn primary" onclick="showView('add')">➕ Yeni Sınav Ekle</button>
+        <button class="btn ghost" onclick="showView('exams')">📝 Sınavları Gör</button>
+      </div>
+      <div class="hero-quote" id="heroQuote">💪 Bugün çözdüğün her soru, yarınki netin demek.</div>
+    </div>
+
+    <div class="stats-grid" id="homeStats"></div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>📊 Net Gelişimi</h3>
+        <canvas id="netChart" height="180"></canvas>
+        <p class="muted" id="netChartNote"></p>
+      </div>
+      <div class="card">
+        <h3>📅 Bugünün Ders Programı</h3>
+        <div id="homeSched"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>⚡ Kısayollar</h3>
+      <div class="shortcuts">
+        <button class="shortcut" onclick="showView('add')">➕<span>Sınav Ekle</span></button>
+        <button class="shortcut" onclick="goExams('TYT')">📘<span>TYT'ler</span></button>
+        <button class="shortcut" onclick="goExams('AYT')">📕<span>AYT'ler</span></button>
+        <button class="shortcut" onclick="showView('exams')">📋<span>Tüm Sınavlar</span></button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🕒 Son Sınavlar</h3>
+      <div id="recentExams"></div>
+    </div>
+  </section>
+
+  <!-- SINAVLAR -->
+  <section id="view-exams" class="view">
+    <h2>📝 Sınavlar</h2>
+    <p class="muted">Önce kategori seç, sonra sınavın üstüne tıklayıp detaylı analizi gör.</p>
+
+    <div class="tabs">
+      <button class="tab active" data-type="ALL" onclick="setFilter('ALL')">Tümü</button>
+      <button class="tab" data-type="TYT" onclick="setFilter('TYT')">TYT</button>
+      <button class="tab" data-type="AYT" onclick="setFilter('AYT')">AYT</button>
+    </div>
+
+    <div id="examList" class="exam-list"></div>
+  </section>
+
+  <!-- KONU DAĞILIMI -->
+  <section id="view-dagilim" class="view">
+    <h2>📊 Konu Dağılımı</h2>
+    <p class="muted">ÖSYM sınavlarında yıllara göre her konudan kaç soru sorulmuş. Önce TYT / AYT seç, sonra dersin üstüne dokunarak tabloyu aç. Yatay kaydırarak tüm yılları görebilirsin.</p>
+
+    <div class="tabs">
+      <button class="dtab active" data-type="TYT" onclick="setDagFilter('TYT')">TYT</button>
+      <button class="dtab" data-type="AYT" onclick="setDagFilter('AYT')">AYT</button>
+    </div>
+
+    <div id="dagilimList" class="exam-list"></div>
+  </section>
+
+  <!-- İSTATİSTİKLER -->
+  <section id="view-stats" class="view">
+    <h2>📈 İstatistikler</h2>
+    <p class="muted">Önce TYT / AYT seç, sonra bir derse dokun. Her konuda denemelerinde yanlış + boş işaretlediğin toplam soru ile deneme başına ortalamaların yan yana gelir. Başlıklara dokunarak sıralayabilirsin (bir daha dokunursan tersine sıralar).</p>
+
+    <div class="tabs">
+      <button class="stab" data-type="GENEL" onclick="setStatFilter('GENEL')">📊 Genel</button>
+      <button class="stab active" data-type="TYT" onclick="setStatFilter('TYT')">TYT</button>
+      <button class="stab" data-type="AYT" onclick="setStatFilter('AYT')">AYT</button>
+    </div>
+
+    <div id="statsBody"></div>
+  </section>
+
+  <!-- BİTEN KONULAR -->
+  <section id="view-done" class="view">
+    <h2>✅ Biten Konular</h2>
+    <p class="muted">Önce TYT / AYT seç, sonra bir derse dokun. Konu anlatımını bitirince 📖 kutucuğunu, testlerini bitirince 📝 kutucuğunu işaretle. İkisi de işaretlenince konunun üstü çizilir. Sağda o konudaki yanlış oranın görünür.</p>
+
+    <div class="tabs">
+      <button class="btab active" data-type="TYT" onclick="setDoneFilter('TYT')">TYT</button>
+      <button class="btab" data-type="AYT" onclick="setDoneFilter('AYT')">AYT</button>
+    </div>
+
+    <div id="doneBody"></div>
+  </section>
+
+  <!-- YAPAY ZEKA -->
+  <section id="view-ai" class="view">
+    <h2>🤖 Yapay Zeka</h2>
+    <p class="muted">İstediğini sor, takıldığın sorunun fotoğrafını gönder — YKS koçun gibi adım adım anlatsın.</p>
+
+    <div class="chat-box" id="chatBox"></div>
+    <div id="imgPreview" class="img-preview"></div>
+    <form id="chatForm" class="chat-form">
+      <label class="attach-btn" title="Fotoğraf ekle">📷<input type="file" id="photoInput" accept="image/*" multiple hidden></label>
+      <input type="text" id="chatInput" placeholder="Sorunu yaz…" autocomplete="off" maxlength="4000">
+      <button type="submit" class="btn primary" id="chatSend">Gönder</button>
+    </form>
+    <div style="text-align:center;margin-top:8px"><button class="link-btn" onclick="clearChat()">Sohbeti temizle</button></div>
+  </section>
+
+  <!-- ÖNCELİK -->
+  <section id="view-priority" class="view">
+    <h2>🎯 Çalışma Önceliği</h2>
+    <p class="muted">ÖSYM'nin her sene ortalama kaç soru sorduğu ve senin yanlış/boşların birleşiyor. Skor = (yanlış + boş × 1,5) × ÖSYM yıllık ortalaması ağırlığı.</p>
+    <div class="tabs">
+      <button class="ptab active" data-type="TYT" onclick="setPriFilter('TYT')">TYT</button>
+      <button class="ptab" data-type="AYT" onclick="setPriFilter('AYT')">AYT</button>
+    </div>
+    <div id="priBody"></div>
+  </section>
+
+  <!-- KARŞILAŞTIRMA -->
+  <section id="view-compare" class="view">
+    <h2>⚖️ Deneme Karşılaştırma</h2>
+    <p class="muted">İki denemeyi seç, ders ders net farkını gör.</p>
+    <div class="card form">
+      <div class="grid-2">
+        <label>A Denemesi<select id="cmpA"></select></label>
+        <label>B Denemesi<select id="cmpB"></select></label>
+      </div>
+    </div>
+    <div id="cmpBody"></div>
+  </section>
+
+  <!-- SAYAÇ -->
+  <section id="view-countdown" class="view">
+    <h2>⏳ YKS Sayacı</h2>
+    <p class="muted">Hedef tarihe kalan süre. Tarihi değiştirebilirsin.</p>
+    <div class="card form">
+      <label>Hedef Tarih ve Saat<input type="datetime-local" id="cdDate"></label>
+    </div>
+    <div class="cd-grid" id="cdGrid"></div>
+    <div class="card"><h3>📌 Durumun</h3><div id="cdStats"></div></div>
+  </section>
+
+  <!-- KARNE -->
+  <section id="view-report" class="view">
+    <h2>🖨️ Deneme Karnesi</h2>
+    <p class="muted">Denemeyi seç, karnesini yazdır.</p>
+    <div class="card form">
+      <label>Deneme<select id="repSel"></select></label>
+      <div class="form-actions"><button class="btn primary" onclick="printReport()">🖨️ Yazdır</button></div>
+    </div>
+    <div id="repBody"></div>
+  </section>
+
+  <!-- YZ SORU -->
+  <section id="view-quiz" class="view">
+    <h2>💡 YZ ile Soru Çöz</h2>
+    <p class="muted">Ders ve konuyu seç, yapay zeka sana test üretsin. Cevapla, kontrol et, açıklamaları gör.</p>
+    <div class="card form">
+      <div class="grid-2">
+        <label>Tür<select id="qType"><option value="TYT">TYT</option><option value="AYT">AYT</option></select></label>
+        <label>Soru Sayısı<select id="qCount"><option value="3">3</option><option value="5" selected>5</option><option value="10">10</option></select></label>
+      </div>
+      <label>Ders<select id="qLesson"></select></label>
+      <label>Konu<select id="qTopic"></select></label>
+      <div class="form-actions"><button class="btn primary" id="qGenBtn" onclick="genQuiz()">✨ Soruları Üret</button></div>
+    </div>
+    <div id="quizBody"></div>
+  </section>
+
+  <!-- DERS PROGRAMI -->
+  <section id="view-schedule" class="view">
+    <h2>📅 Ders Programı</h2>
+    <p class="muted">Her haftanın programı ayrı tutulur. Bitirdikçe tik at. Bugün çerçeveli gösterilir.</p>
+    <div class="sched-nav">
+      <button class="back-btn" style="margin:0" onclick="schedNav(-1)">‹ Önceki</button>
+      <div style="text-align:center"><b id="schedLabel"></b><br><button class="link-btn" onclick="schedNav(0)">Bu hafta</button></div>
+      <button class="back-btn" style="margin:0" onclick="schedNav(1)">Sonraki ›</button>
+    </div>
+    <div id="schedBody"></div>
+    <div style="text-align:center;margin-top:10px"><button class="back-btn" onclick="copyPrevWeek()">📋 Geçen haftayı kopyala</button></div>
+  </section>
+
+  <!-- SINAV EKLE -->
+  <section id="view-add" class="view">
+    <h2>➕ Yeni Sınav Ekle</h2>
+    <p class="muted">Önce sınav adı, türü (TYT/AYT) ve tarihi gir. Sonra dersler alt alta gelecek — her dersin üstüne dokun, konular liste halinde açılsın. Sadece <b>yanlış</b> ve <b>boş</b> bıraktığın konuları +1 ile işaretle, <b>girmediklerin otomatik doğru</b> sayılır.</p>
+
+    <form id="examForm" class="card form">
+      <div class="edit-banner" id="editBanner" style="display:none">✏️ <b id="editBannerName"></b> düzenleniyor <button type="button" class="link-btn" onclick="cancelEdit()">(vazgeç)</button></div>
+      <div class="grid-2">
+        <label>Sınav İsmi*
+          <input type="text" id="fName" required placeholder="örn. TYT Deneme 5" />
+        </label>
+        <label>Sınav Türü*
+          <select id="fType" required>
+            <option value="TYT">TYT</option>
+            <option value="AYT">AYT</option>
+          </select>
+        </label>
+      </div>
+      <label>Sınav Tarihi*
+        <input type="date" id="fDate" required value="2026-09-26" />
+      </label>
+      <div class="grand-total" id="grandTotal"></div>
+      <div id="lessonFields"></div>
+      <div class="form-actions">
+        <button type="submit" class="btn primary" id="saveBtn">💾 Kaydet</button>
+        <button type="button" class="btn ghost" onclick="showView('exams')">Vazgeç</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<!-- DETAY MODAL -->
+<div class="modal-backdrop" id="examModal">
+  <div class="modal">
+    <button class="drawer-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<footer>YKS Koçluk • İlknur — Verilerin bulutta eşitlenir, her cihazda aynı görünür. ☁</footer>
+
+<script src="topics.js"></script>
+<script src="dagilim.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

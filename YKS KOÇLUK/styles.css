@@ -1,0 +1,328 @@
+/* YKS Koçluk • İlknur — rafine sade tema (açık + koyu mod) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+:root{
+  --bg:#f4f4f5; --card:#ffffff; --ink:#18181b; --muted:#71717a;
+  --primary:#4f46e5; --accent:#059669; --amber:#b45309;
+  --deep:#1d4ed8; --deep-border:#3b82f6;
+  --danger:#dc2626; --border:#e4e4e7; --radius:14px;
+  --shadow:0 1px 2px rgba(0,0,0,.05);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+::selection{background:var(--primary);color:#fff}
+body{margin:0;color:var(--ink);font-family:'Inter',system-ui,sans-serif;background:var(--bg);-webkit-font-smoothing:antialiased}
+h1,h2,h3,.brand-title,.exam-name,.stat b,.cd-box b{font-family:'Plus Jakarta Sans','Inter',system-ui,sans-serif}
+.view h2{font-size:23px;letter-spacing:-.02em;margin:6px 0 6px}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#d4d4d8;border-radius:8px;border:2px solid var(--bg)}
+::-webkit-scrollbar-track{background:transparent}
+
+/* üst bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;
+  padding:11px 20px;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.brand{display:flex;gap:11px;align-items:center;cursor:pointer}
+.logo{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;background:var(--deep);letter-spacing:.5px}
+.brand-title{font-weight:800;font-size:15px}
+.brand-sub{font-size:11.5px;color:var(--muted)}
+.hamburger{width:40px;height:40px;border:1px solid var(--border);background:#fff;border-radius:10px;cursor:pointer;
+  display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center}
+.hamburger:hover{border-color:var(--primary)}
+.hamburger span{display:block;width:17px;height:2px;background:var(--ink);border-radius:2px}
+.theme-btn{width:40px;height:40px;border:1px solid var(--border);background:#fff;border-radius:10px;cursor:pointer;font-size:17px;display:grid;place-items:center}
+.theme-btn:hover{border-color:var(--primary)}
+.syncbar{max-width:1000px;margin:0 auto;padding:10px 16px 0;font-size:12px;color:var(--muted)}
+.syncbar span{cursor:pointer}
+.syncbar span:hover{color:var(--ink)}
+
+/* çekmece menü */
+.drawer{position:fixed;top:0;right:-300px;width:282px;height:100%;background:#fff;z-index:50;
+  padding:18px;transition:right .25s ease;box-shadow:-12px 0 40px rgba(0,0,0,.12);display:flex;flex-direction:column;gap:3px;overflow-y:auto}
+.drawer.open{right:0}
+.drawer-link{padding:10px 13px;border-radius:9px;text-decoration:none;color:var(--ink);font-weight:600;font-size:14.5px}
+.drawer-link.active,.drawer-link:hover{background:#eef2ff;color:var(--primary)}
+.drawer-link.sub{padding-left:28px;font-weight:500;color:var(--muted);font-size:13.5px}
+.drawer-close{align-self:flex-end;border:1px solid var(--border);background:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;color:var(--ink)}
+.drawer-label{font-size:11px;color:var(--muted);letter-spacing:.08em;margin:10px 0 4px;font-weight:700}
+.drawer-foot{margin-top:auto;font-size:12px;color:var(--muted)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.25s;z-index:40}
+.overlay.show{opacity:1;pointer-events:auto}
+main{max-width:1000px;margin:0 auto;padding:22px 16px 64px}
+.view{display:none}.view.active{display:block;animation:fade .18s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* kahraman alanı */
+.hero{color:#fff;border-radius:var(--radius);padding:30px 28px;margin-bottom:18px;background:var(--deep);border:1px solid var(--deep-border)}
+.hero h1{margin:0 0 8px;font-size:27px;letter-spacing:-.02em}
+.hero p{color:#a1a1aa;margin:0 0 16px;font-size:15px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.hero-quote{margin-top:16px;border:1px solid rgba(255,255,255,.25);border-left:3px solid #93c5fd;border-radius:0 10px 10px 0;background:rgba(255,255,255,.1);padding:11px 15px;font-size:14px;color:#eff6ff;transition:opacity .3s}
+.btn{border:none;border-radius:10px;padding:11px 18px;font-weight:700;cursor:pointer;font-size:14px;font-family:inherit;transition:background .15s,transform .1s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--primary);color:#fff}
+.btn.primary:hover{background:#4338ca}
+.btn.primary:disabled{opacity:.6;cursor:default}
+.btn.ghost{background:transparent;color:#fff;border:1px solid #52525b}
+.btn.ghost:hover{border-color:#a1a1aa}
+#view-add .btn.ghost,#view-exams .btn.ghost{color:var(--ink);border-color:var(--border);background:#fff}
+
+/* istatistik kartları */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
+.stat b{font-size:23px;display:block;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{font-size:12.5px;color:var(--muted);font-weight:500}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.grid-2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 12px;font-size:15.5px;letter-spacing:-.01em}
+.muted{color:var(--muted);font-size:14px}
+.bullets{margin:0;padding-left:18px;display:grid;gap:8px;font-size:14px}
+.shortcuts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:600px){.shortcuts{grid-template-columns:repeat(2,1fr)}}
+.shortcut{border:1px solid var(--border);background:var(--card);border-radius:12px;padding:16px 8px;font-size:22px;cursor:pointer;display:flex;flex-direction:column;gap:6px;align-items:center;transition:border-color .15s,transform .15s}
+.shortcut span{font-size:13px;font-weight:700;color:var(--ink)}
+.shortcut:hover{border-color:var(--primary);transform:translateY(-2px)}
+.tabs{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
+.tab{border:1px solid var(--border);background:var(--card);padding:9px 18px;border-radius:999px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--ink)}
+.tab.active{background:var(--deep);color:#fff;border-color:var(--deep)}
+.dtab{border:1px solid var(--border);background:var(--card);padding:9px 24px;border-radius:999px;font-weight:700;cursor:pointer;font-size:15px;font-family:inherit;color:var(--ink)}
+.dtab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.stab{border:1px solid var(--border);background:var(--card);padding:9px 24px;border-radius:999px;font-weight:700;cursor:pointer;font-size:15px;font-family:inherit;color:var(--ink)}
+.stab.active{background:#0284c7;color:#fff;border-color:#0284c7}
+.btab{border:1px solid var(--border);background:var(--card);padding:9px 24px;border-radius:999px;font-weight:700;cursor:pointer;font-size:15px;font-family:inherit;color:var(--ink)}
+.btab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.ptab{border:1px solid var(--border);background:var(--card);padding:9px 24px;border-radius:999px;font-weight:700;cursor:pointer;font-size:15px;font-family:inherit;color:var(--ink)}
+.ptab.active{background:var(--amber);color:#fff;border-color:var(--amber)}
+
+/* tablolar */
+.dag-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:10px}
+.dag-table{border-collapse:collapse;font-size:13px;min-width:100%;white-space:nowrap}
+.dag-table th{background:var(--deep);color:#fff;padding:9px 12px;font-size:12px;position:sticky;top:0;font-weight:600}
+.dag-table td{border-bottom:1px solid var(--border);padding:8px 12px;text-align:center;transition:background .12s}
+.dag-table tr:nth-child(even) td{background:#fafafa}
+.dag-table tbody tr:hover td,.dag-table tr:not(:first-child):hover td{background:#f4f4f5}
+.dag-konu{text-align:left !important;font-weight:600;position:sticky;left:0;background:var(--card);min-width:170px;max-width:230px;white-space:normal;box-shadow:1px 0 0 var(--border)}
+.dag-table th.dag-konu{background:var(--deep);z-index:2}
+.dag-totalrow td{background:#eef2ff;font-weight:800}
+.dag-total{font-weight:800}
+.dash{color:#d4d4d8}
+.back-btn{border:1px solid var(--border);background:var(--card);color:var(--ink);border-radius:9px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;margin-bottom:12px;font-family:inherit}
+.back-btn:hover{border-color:var(--primary)}
+.top3-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:700px){.top3-grid{grid-template-columns:1fr}}
+.top3-grid .card{margin-bottom:0}
+.top3-row{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:7px 0;border-bottom:1px dashed var(--border)}
+.top3-row:last-child{border-bottom:none}
+th.sortable{cursor:pointer;user-select:none}
+th.sortable.sorted{background:#1e3a8a !important}
+
+/* sayaç */
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.cd-box{background:var(--deep);color:#fff;border:1px solid var(--deep-border);border-radius:var(--radius);padding:18px 8px;text-align:center}
+.cd-box b{font-size:32px;display:block;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.cd-box span{font-size:12px;color:#a1a1aa}
+.home-cd{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--deep);color:#fff;border:1px solid var(--deep-border);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:14px;flex-wrap:wrap}
+.home-cd-label{font-weight:700}
+.home-cd-times b{font-size:17px;font-variant-numeric:tabular-nums}
+
+/* quiz */
+.opt-btn{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 12px;margin-top:6px;cursor:pointer;font-size:14px;font-family:inherit}
+.opt-btn:hover{border-color:var(--primary)}
+.opt-btn.sel{border-color:var(--primary);background:#eef2ff;font-weight:700}
+.opt-btn.ok{border-color:var(--accent);background:#ecfdf5;font-weight:700}
+.opt-btn.no{border-color:var(--danger);background:#fef2f2}
+.quiz-q{font-weight:600;margin:0 0 4px}
+.quiz-exp p{margin:8px 0 0}
+
+/* ders programı */
+.sched-nav{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.day-card.today{border:2px solid var(--deep)}
+.day-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px}
+.today-badge{display:inline-block;background:var(--deep);color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:2px 10px;margin-left:6px}
+.task-row{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px dashed var(--border)}
+.task-row:last-of-type{border-bottom:none}
+.task-row input[type=checkbox]{width:20px;height:20px;flex:none;accent-color:var(--ink);cursor:pointer}
+.task-row span{flex:1;font-size:14px}
+.task-row.tdone span{text-decoration:line-through;color:var(--muted)}
+.task-del{border:none;background:none;color:var(--muted);font-size:14px;cursor:pointer;padding:4px}
+.task-del:hover{color:var(--danger)}
+.sched-add{display:flex;gap:8px;margin-top:10px}
+.sched-add input{flex:1;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;background:var(--card);color:var(--ink)}
+.sched-add input:focus{outline:2px solid var(--primary)}
+.sched-add .btn{padding:10px 16px}
+.diff-up{color:#047857;font-weight:800}
+.diff-down{color:#b91c1c;font-weight:800}
+@media print{
+  .topbar,.drawer,.overlay,.syncbar,.tabs,footer,.form-actions,.back-btn,.danger-btn,.btn,.link-btn,.attach-btn,#chatForm,.home-cd,.hero-quote{display:none !important}
+  main{max-width:100%;padding:0}
+  .view{display:none !important}
+  .view.active{display:block !important;animation:none}
+  .card{box-shadow:none}
+}
+
+/* biten konular */
+.done-row{display:flex;align-items:center;gap:8px;padding:10px 8px;border-bottom:1px solid var(--border)}
+.done-row:last-child{border-bottom:none}
+.done-row.finished{background:#f6fef9}
+.done-name{flex:1;font-weight:600;font-size:14px;min-width:0}
+.done-row.finished .done-name{text-decoration:line-through;color:var(--muted)}
+.done-check{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+.done-check input{width:20px;height:20px;accent-color:var(--ink);cursor:pointer}
+.done-rate{min-width:44px;text-align:right}
+.rate-badge{display:inline-block;font-weight:800;font-size:13px;border-radius:8px;padding:3px 8px}
+.rate-badge.good{background:#dcfce7;color:#15803d}
+.rate-badge.mid{background:#fef3c7;color:#92400e}
+.rate-badge.low{background:#fee2e2;color:#b91c1c}
+
+/* yapay zeka sohbeti */
+.chat-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;height:46vh;min-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+.chat-hint{color:var(--muted);font-size:14px;text-align:center;margin:auto;line-height:1.7}
+.bubble{max-width:88%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.65;word-wrap:break-word}
+.bubble.me{align-self:flex-end;background:var(--deep);color:#fff;border-bottom-right-radius:4px}
+.bubble.ai{align-self:flex-start;background:#f4f4f5;color:var(--ink);border-bottom-left-radius:4px}
+.bubble pre{background:rgba(0,0,0,.06);border-radius:8px;padding:8px;overflow-x:auto;font-size:12px}
+.bubble.me pre{background:rgba(255,255,255,.15)}
+.bubble code{background:rgba(0,0,0,.07);border-radius:5px;padding:1px 5px;font-size:12px}
+.chat-img{max-width:100%;border-radius:10px;margin-bottom:6px;display:block}
+.img-preview{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.thumb-wrap{position:relative;display:inline-block}
+.thumb{width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+.thumb-wrap button{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;border:none;background:var(--danger);color:#fff;font-size:11px;cursor:pointer}
+.chat-form{display:flex;gap:8px;margin-top:10px;align-items:center}
+.chat-form input[type=text]{flex:1;padding:12px;border:1px solid var(--border);border-radius:12px;font-size:14px;font-family:inherit;background:var(--card);color:var(--ink)}
+.chat-form input[type=text]:focus{outline:2px solid var(--primary)}
+.attach-btn{width:46px;height:46px;flex:none;display:grid;place-items:center;font-size:22px;background:var(--card);color:var(--ink);border:1px solid var(--border);border-radius:12px;cursor:pointer}
+.attach-btn:hover{border-color:var(--primary)}
+
+/* sınav kartları */
+.exam-list{display:grid;gap:10px}
+.exam-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s}
+.exam-card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 8px 20px rgba(79,70,229,.12)}
+.exam-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.exam-name{font-weight:800;font-size:16px;letter-spacing:-.01em}
+.badge{font-size:11.5px;font-weight:800;padding:4px 12px;border-radius:999px;letter-spacing:.02em}
+.badge.TYT{background:#e0e7ff;color:#3730a3}.badge.AYT{background:#fce7f3;color:#9d174d}
+.exam-date{font-size:13px;color:var(--muted);margin-bottom:10px}
+.exam-nums{display:flex;gap:8px;flex-wrap:wrap}
+.num{background:#f4f4f5;border-radius:10px;padding:8px 12px;font-size:13px}
+.num b{display:block;font-size:15px;font-variant-numeric:tabular-nums}
+.num.net{background:#ecfdf5}.num.net b{color:#047857}
+.empty{background:var(--card);border:1px dashed var(--border);border-radius:var(--radius);padding:30px;text-align:center;color:var(--muted)}
+.form label{display:block;font-weight:600;font-size:14px;margin-bottom:12px}
+.form input,.form select{width:100%;margin-top:6px;padding:12px;border:1px solid var(--border);border-radius:12px;font-size:14px;font-family:inherit;background:var(--card);color:var(--ink)}
+.form input:focus,.form select:focus{outline:2px solid var(--primary)}
+.lesson-box{border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;background:var(--card)}
+.lesson-box h4{margin:0 0 10px}
+.lesson-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+@media(max-width:600px){.lesson-grid{grid-template-columns:1fr 1fr 1fr}}
+.form-actions{display:flex;gap:10px;margin-top:8px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;z-index:60;padding:16px}
+.modal-backdrop.open{display:grid}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:18px;max-width:720px;width:100%;max-height:88vh;overflow:auto;padding:22px;position:relative}
+.detail-head{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.lesson-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+.lesson-table th,.lesson-table td{border-bottom:1px solid var(--border);padding:10px 8px;text-align:left}
+.tag{display:inline-block;background:#fef3c7;color:#92400e;border-radius:8px;padding:2px 8px;font-size:12px;margin:2px;font-weight:600}
+.bar{height:8px;background:#f4f4f5;border-radius:99px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--deep);border-radius:99px}
+.danger-btn{background:#fee2e2;color:#b91c1c;border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;margin-top:12px;font-family:inherit}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+canvas{width:100%}
+
+/* konu bazlı giriş */
+.grand-total{background:var(--deep);color:#fff;border-radius:12px;padding:14px 16px;font-weight:600;margin-bottom:12px;position:sticky;top:69px;z-index:5}
+.grand-total b{color:#fff}
+.acc{border:1px solid var(--border);border-radius:14px;margin-bottom:10px;background:var(--card);overflow:hidden}
+.acc-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:14px 16px;cursor:pointer;background:var(--card)}
+.acc-head:hover{background:#f4f4f5}
+.acc.open .acc-head{background:#eef2ff}
+.acc.open .acc-head:hover{background:#e0e7ff}
+.acc-sum{font-size:13px;text-align:right;line-height:1.5}
+.big-net{font-size:24px;font-weight:800;white-space:nowrap;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.big-net small{font-size:12px;color:var(--muted);font-weight:600}
+.acc-detail{white-space:nowrap}
+.stat-netline{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.stat-avgs{font-size:13px;color:var(--muted)}
+.stat-avgs b{color:var(--ink)}
+.caret{color:var(--primary);font-weight:800}
+.acc-body{display:none;padding:10px}
+.acc.open .acc-body{display:block}
+.topic-table{width:100%;border-collapse:collapse;font-size:13px}
+.topic-table th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:8px 6px;border-bottom:2px solid var(--border)}
+.topic-table td{border-bottom:1px solid var(--border);padding:8px 6px;vertical-align:middle}
+.topic-name{font-weight:600;max-width:190px}
+.cell{display:flex;align-items:center;gap:6px}
+.count-input{width:58px;padding:8px 6px;border:1px solid var(--border);border-radius:9px;font-size:15px;font-weight:800;text-align:center;font-family:inherit;background:var(--card);color:var(--ink);font-variant-numeric:tabular-nums}
+.count-input:focus{outline:2px solid var(--primary);border-color:var(--primary)}
+.plus{border:1px solid var(--border);background:var(--card);color:var(--ink);font-weight:800;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:13px}
+.plus:hover{border-color:var(--primary)}
+.plus.bad{color:var(--danger)}
+.plus.idle{color:var(--muted)}
+.plus:active{transform:scale(.94)}
+.minus{border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:9px;padding:7px 9px;cursor:pointer;font-size:13px}
+.netcell{font-weight:800;white-space:nowrap}
+.reset-btn{border:none;background:none;color:var(--muted);font-size:12px;cursor:pointer;padding:8px 4px}
+.reset-btn:hover{color:var(--danger)}
+.detail-lesson{border:1px solid var(--border);border-radius:12px;margin-top:10px;overflow:hidden}
+.detail-lesson-head{display:flex;justify-content:space-between;gap:8px;padding:12px 14px;cursor:pointer;background:var(--card);font-size:14px;flex-wrap:wrap}
+.detail-lesson-body{display:none;padding:6px 14px 12px}
+.detail-lesson.open .detail-lesson-body{display:block}
+.topic-mini-row{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:7px 0;border-bottom:1px dashed var(--border)}
+.topic-mini-row:last-child{border-bottom:none}
+.quota{display:inline-block;background:#eef2ff;color:var(--primary);font-size:11px;font-weight:800;border-radius:999px;padding:2px 10px;margin-left:6px}
+.k-ok{color:#047857;font-weight:700}
+.k-warn{color:#b45309;font-weight:700}
+.acc-warn .acc-head{border-left:4px solid var(--danger)}
+.acc:not(.acc-warn) .acc-head{border-left:4px solid var(--accent)}
+.top-right{display:flex;gap:6px;align-items:center}
+.icon-btn{border:1px solid var(--border);background:var(--card);color:var(--ink);border-radius:9px;width:32px;height:32px;font-size:15px;cursor:pointer;display:grid;place-items:center}
+.icon-btn:hover{border-color:var(--primary)}
+.icon-btn.danger{color:var(--danger)}
+.edit-banner{background:#fffbeb;border:1px solid #fcd34d;color:#713f12;border-radius:12px;padding:10px 14px;font-size:14px;margin-bottom:12px}
+.link-btn{border:none;background:none;color:var(--primary);font-weight:700;cursor:pointer;font-size:14px}
+
+/* --- koyu mod --- */
+[data-theme="dark"]{
+  --bg:#09090d; --card:#131318; --ink:#f4f4f5; --muted:#a1a1aa;
+  --border:#232329; --shadow:0 1px 3px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb{background:#3f3f46;border-color:var(--bg)}
+[data-theme="dark"] body{background:var(--bg);color:var(--ink)}
+[data-theme="dark"] .topbar{background:rgba(19,19,24,.9)}
+[data-theme="dark"] .drawer{background:#101014}
+[data-theme="dark"] .drawer-link.active,[data-theme="dark"] .drawer-link:hover{background:#1e1e2a;color:#a5b4fc}
+[data-theme="dark"] .logo{background:var(--deep)}
+[data-theme="dark"] .card,[data-theme="dark"] .stat,[data-theme="dark"] .exam-card,
+[data-theme="dark"] .modal,[data-theme="dark"] .chat-box,[data-theme="dark"] .empty{background:var(--card)}
+[data-theme="dark"] .shortcut,[data-theme="dark"] .tab,[data-theme="dark"] .dtab,
+[data-theme="dark"] .stab,[data-theme="dark"] .btab,[data-theme="dark"] .ptab,
+[data-theme="dark"] .back-btn,[data-theme="dark"] .icon-btn,[data-theme="dark"] .attach-btn,
+[data-theme="dark"] .hamburger,[data-theme="dark"] .theme-btn,[data-theme="dark"] .drawer-close,
+[data-theme="dark"] .opt-btn,[data-theme="dark"] .plus,[data-theme="dark"] .minus{background:var(--card)}
+[data-theme="dark"] .tab.active{background:#f4f4f5;color:#131318;border-color:#f4f4f5}
+[data-theme="dark"] .acc{background:var(--card)}
+[data-theme="dark"] .acc-head,[data-theme="dark"] .detail-lesson-head,[data-theme="dark"] .lesson-box{background:#1a1a21}
+[data-theme="dark"] .acc-head:hover{background:#20202a}
+[data-theme="dark"] .acc.open .acc-head,[data-theme="dark"] .acc.open .acc-head:hover{background:#232338}
+[data-theme="dark"] .dag-table tr:nth-child(even) td{background:#16161c}
+[data-theme="dark"] .dag-table tr:not(:first-child):hover td{background:#1e1e28}
+[data-theme="dark"] .dag-konu{background:var(--card)}
+[data-theme="dark"] .dag-totalrow td{background:#232338}
+[data-theme="dark"] th.sortable.sorted{background:#2e2e3e !important}
+[data-theme="dark"] .bubble.ai{background:#1a1a21}
+[data-theme="dark"] .num{background:#1a1a21}
+[data-theme="dark"] .opt-btn.sel{background:#232338}
+[data-theme="dark"] .today-badge{background:#e4e4e7;color:#131318}
+[data-theme="dark"] .done-row.finished,[data-theme="dark"] .task-row.tdone{background:#0e211a}
+[data-theme="dark"] #view-add .btn.ghost,[data-theme="dark"] #view-exams .btn.ghost{background:var(--card);color:var(--ink)}
+[data-theme="dark"] .edit-banner{color:#713f12}
+[data-theme="dark"] .done-check input,[data-theme="dark"] .task-row input[type=checkbox]{accent-color:#fff}
+[data-theme="dark"] .quota{background:#232338;color:#a5b4fc}
+[data-theme="dark"] .link-btn{color:#a5b4fc}
+[data-theme="dark"] .drawer-link.active,[data-theme="dark"] .drawer-link:hover{color:#a5b4fc}
+[data-theme="dark"] .k-ok{color:#34d399}
+[data-theme="dark"] .k-warn{color:#fbbf24}
+[data-theme="dark"] .diff-up{color:#34d399}
+[data-theme="dark"] .diff-down{color:#f87171}
+[data-theme="dark"] .bar{background:#26262e}
